@@ -7,11 +7,11 @@ export async function GET(request) {
     const nsn = searchParams.get('nsn');
 
     if (!nsn || isNaN(nsn)) {
-      return NextResponse.json({ error: 'Invalid nsn provided' }, { status: 400 });
+      return NextResponse.json({ error: 'Invalid nsn provided, must be a number' }, { status: 400 });
     }
 
     const imageUrl = `https://us.dunkindonuts.switchboardcms.com/device/${nsn}-107/screenshot`;
-    console.log(imageUrl);
+    //console.log(imageUrl);
 
     const response = await fetch(imageUrl);
 
@@ -24,7 +24,7 @@ export async function GET(request) {
     const headers = {
       'Content-Type': response.headers.get('content-type'),
     };
-
+    //console.log(headers);
     return new NextResponse(arrayBuffer, { status: 200, headers });
 
   } catch (error) {
