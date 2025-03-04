@@ -1,17 +1,31 @@
 import { NextResponse } from "next/server"; // App router
-//import axios from "axios";
+//usage http://localhost:3000/api/healthCheck/getPreview?nsn=347393&mp=107
+// nsn and mp are arguments passed to the endPoint
 
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
     const nsn = searchParams.get('nsn');
+    const mp  = searchParams.get('mp');
 
     if (!nsn || isNaN(nsn)) {
       return NextResponse.json({ error: 'Invalid nsn provided, must be a number' }, { status: 400 });
     }
 
-    const imageUrl = `https://us.dunkindonuts.switchboardcms.com/device/${nsn}-107/screenshot`;
+    //const imageUrl = `https://us.dunkindonuts.switchboardcms.com/device/${nsn}-${mp}/screenshot`;
     //console.log(imageUrl);
+
+    let imageUrl;
+    console.log(`mp number: "${mp}`);
+
+    //if No mp is passed, the API will display prime image
+    if (mp === null) {
+      // mp is exactly null
+      imageUrl = `https://us.dunkindonuts.switchboardcms.com/device/${nsn}/screenshot`;
+    } else {
+      // mp is not null
+      imageUrl = `https://us.dunkindonuts.switchboardcms.com/device/${nsn}-${mp}/screenshot`;
+    }
 
     const response = await fetch(imageUrl);
 
