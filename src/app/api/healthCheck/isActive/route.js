@@ -15,11 +15,10 @@ export async function GET() {
 
         try {
           const response = await fetch(imageUrl, { method: "HEAD" });
-            console.log(nsn);
           return {
             nsn,
             status: response.ok
-              ? "available"
+              ? "available" //200-299
               : `unavailable (status ${response.status})`,
           };
         } catch (error) {
@@ -27,7 +26,7 @@ export async function GET() {
         }
       })
     );
-
+    //console.log(results);
     // Format the final response
     const formattedResults = results.map((result) => result.value);
     return NextResponse.json({ urls: formattedResults });
