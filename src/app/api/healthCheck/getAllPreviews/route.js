@@ -2,10 +2,25 @@ import { NextResponse } from "next/server";
 import sharp from 'sharp';
 
 const domain = "https://us.dunkindonuts.switchboardcms.com";
-const nsns = ["357106", "306321", "301677", "348405", "330690", "335037", "331967", "331018", "346745"]; //Current grid = 3x3
+const nsns1 = ["357106", "306321", "301677", "348405", "330690", "335037", "331967", "331018", "346745"]; //Current grid = 3x3
+const nsns2 = ["332047", "339598", "342324", "348454", "307823", "354847", "351112", "331018", "344824"];
+let nsns = [];
 
-export async function GET() {
+export async function GET(request) {
   try {
+    const { searchParams } = new URL(request.url);
+    const page = searchParams.get('page');
+console.log(page)
+        //if No page is passed, the API will display first page
+        if (page === "1") {
+      
+          nsns = nsns1;
+
+        } else {
+          
+          nsns = nsns2;
+        }
+
     const results = await Promise.allSettled(
       nsns.map(async (nsn) => {
         const imageUrl = `${domain}/device/${nsn}/screenshot`;
