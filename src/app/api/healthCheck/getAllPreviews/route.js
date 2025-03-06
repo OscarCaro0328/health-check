@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import sharp from 'sharp';
 
 const domain = "https://us.dunkindonuts.switchboardcms.com";
-const nsns = ["357106", "306321", "301677", "348405", "330690", "335037", "331967", "331018", "346745"]; // Added 3 more NSNs
+const nsns = ["357106", "306321", "301677", "348405", "330690", "335037", "331967", "331018", "346745"]; //Current grid = 3x3
 
 export async function GET() {
   try {
@@ -45,8 +45,8 @@ export async function GET() {
     const originalCompositeWidth = commonWidth * 3;
     const originalCompositeHeight = commonHeight * 3;
 
-    const reducedCompositeWidth = Math.round(originalCompositeWidth * 1.0); 
-    const reducedCompositeHeight = Math.round(originalCompositeHeight * 1.0); 
+   // const reducedCompositeWidth = Math.round(originalCompositeWidth * 1.0); 
+   // const reducedCompositeHeight = Math.round(originalCompositeHeight * 1.0); 
 
     const compositeImage = await sharp({ create: { width: originalCompositeWidth, height: originalCompositeHeight, channels: 4, background: { r: 255, g: 255, b: 255, alpha: 1 } } })
       .composite([
@@ -60,7 +60,7 @@ export async function GET() {
         { input: resizedImages[7], top: commonHeight * 2, left: commonWidth },
         { input: resizedImages[8], top: commonHeight * 2, left: commonWidth * 2 },
       ])
-      .resize(reducedCompositeWidth, reducedCompositeHeight) // Resize the composite image
+      //.resize(reducedCompositeWidth, reducedCompositeHeight) // Resize the composite image
       .png()
       .toBuffer();
 
