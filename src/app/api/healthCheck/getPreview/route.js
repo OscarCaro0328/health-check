@@ -16,7 +16,7 @@ export async function GET(request) {
 
 
     let imageUrl;
-    console.log(`mp number: "${mp}`);
+    console.log(`mp number: ${mp}`);
 
     //if No mp is passed, the API will display prime image
     if (mp === null) {
@@ -38,7 +38,7 @@ export async function GET(request) {
     const headers = {
       'Content-Type': response.headers.get('content-type'),
     };
-    //console.log(headers);
+    console.log(headers);
     return new NextResponse(arrayBuffer, { status: 200, headers });
 
   } catch (error) {
