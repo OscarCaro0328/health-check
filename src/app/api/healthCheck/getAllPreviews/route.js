@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import sharp from 'sharp';
 
 const domain = "https://us.dunkindonuts.switchboardcms.com";
-const nsns = ["357106", "306321", "301677", "348405"];
+const nsns = ["357106", "306321", "301677", "348405", "330690", "335037", "331967", "331018", "346745"]; // Added 3 more NSNs
 
 export async function GET() {
   try {
@@ -33,8 +33,8 @@ export async function GET() {
       return NextResponse.json({ error: "Could not retrieve all images." }, { status: 500 });
     }
 
-    const commonWidth = 600; // Choose a common width
-    const commonHeight = 200; // Choose a common height
+    const commonWidth = 320;  // Original 3840
+    const commonHeight = 90; //  Original 1080
 
     const resizedImages = await Promise.all(images.map(async (image) => {
       return sharp(image)
@@ -42,13 +42,25 @@ export async function GET() {
         .toBuffer();
     }));
 
-    const compositeImage = await sharp({ create: { width: commonWidth * 2, height: commonHeight * 2, channels: 4, background: { r: 255, g: 255, b: 255, alpha: 1 } } })
+    const originalCompositeWidth = commonWidth * 3;
+    const originalCompositeHeight = commonHeight * 3;
+
+    const reducedCompositeWidth = Math.round(originalCompositeWidth * 1.0); 
+    const reducedCompositeHeight = Math.round(originalCompositeHeight * 1.0); 
+
+    const compositeImage = await sharp({ create: { width: originalCompositeWidth, height: originalCompositeHeight, channels: 4, background: { r: 255, g: 255, b: 255, alpha: 1 } } })
       .composite([
         { input: resizedImages[0], top: 0, left: 0 },
         { input: resizedImages[1], top: 0, left: commonWidth },
-        { input: resizedImages[2], top: commonHeight, left: 0 },
-        { input: resizedImages[3], top: commonHeight, left: commonWidth },
+        { input: resizedImages[2], top: 0, left: commonWidth * 2 },
+        { input: resizedImages[3], top: commonHeight, left: 0 },
+        { input: resizedImages[4], top: commonHeight, left: commonWidth },
+        { input: resizedImages[5], top: commonHeight, left: commonWidth * 2 },
+        { input: resizedImages[6], top: commonHeight * 2, left: 0 },
+        { input: resizedImages[7], top: commonHeight * 2, left: commonWidth },
+        { input: resizedImages[8], top: commonHeight * 2, left: commonWidth * 2 },
       ])
+      .resize(reducedCompositeWidth, reducedCompositeHeight) // Resize the composite image
       .png()
       .toBuffer();
 
