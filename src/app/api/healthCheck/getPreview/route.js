@@ -1,5 +1,8 @@
-import { NextResponse } from "next/server"; // App router
 //usage http://localhost:3000/api/healthCheck/getPreview?nsn=347393&mp=107
+// Currently for Dunkin domain
+
+import { NextResponse } from "next/server"; // App router
+
 // nsn and mp are arguments passed to the endPoint
 
   const domain = "https://us.dunkindonuts.switchboardcms.com";

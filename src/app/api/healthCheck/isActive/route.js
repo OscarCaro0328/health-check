@@ -1,11 +1,14 @@
+//usage http://localhost:3000/api/healthCheck/isActie?page=1   Pages between 1 and 10
+
+
+
 import { NextResponse } from "next/server"; // App router
-//import { nsns } from "./data";
 import { getNsnsForPage } from "./data.js";
 
 const domain_dd = "https://us.dunkindonuts.switchboardcms.com";
 const domain_mcd_uat = "https://us-mcd.uat.switchboardcms.com/";
 const domain_arbys = "https://us-arbys.switchboardcms.com";
-//const nsns = ["353155", "306321", "301677","1111101"];
+
 
 export async function GET(request) {
   try {

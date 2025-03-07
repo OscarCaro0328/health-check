@@ -1,15 +1,12 @@
+//usage http://localhost:3000/api/healthCheck/getAllPreviews?page=1   Pages between 1 and 10
+
+
 import { NextResponse } from "next/server";
 import sharp from 'sharp';
 import { getNsnsForPage } from "./data.js";
 
 
 const domain = "https://us.dunkindonuts.switchboardcms.com";
-/*
-const nsns1 = ["357106", "306321", "301677", "348405", "330690", "335037", "331967", "331018", "346745"]; //Current grid = 3x3
-const nsns2 = ["332047", "339598", "342324", "348454", "307823", "354847", "351112", "331018", "344824"];
-*/
-
-//let nsns = [];
 
 export async function GET(request) {
   try {

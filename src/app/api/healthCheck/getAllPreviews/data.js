@@ -1,6 +1,3 @@
-
-
-
 export function getNsnsForPage(page) {
     const pageSize = 6;
     const startIndex = (page - 1) * pageSize;
